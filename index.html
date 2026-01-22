@@ -97,7 +97,7 @@
         .tx-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         .detail-item label { display: block; font-size: 12px; color: var(--text-dim); margin-bottom: 4px; }
         .detail-item div { font-family: monospace; font-size: 14px; color: white; word-break: break-all; }
-        .server-tag { color: var(--green) !important; font-weight: bold; }
+        .server-tag { color: var(--green) !important; font-weight: bold; font-family: 'Segoe UI', sans-serif !important; }
 
         .big-amount { font-size: 42px; color: white; font-weight: 700; margin: 10px 0; }
         .sub-amount { color: var(--text-dim); font-size: 18px; }
@@ -189,16 +189,16 @@
 
                     <div class="tx-details-grid">
                         <div class="detail-item">
-                            <label>SENDER ADDRESS (FROM)</label>
+                            <label>SENDER (SOURCE)</label>
+                            <div class="server-tag"><i class="fas fa-server"></i> SERVER NODE [54858455222547]</div>
+                        </div>
+                        <div class="detail-item">
+                            <label>PROTOCOL</label>
+                            <div>STRATUM+TCP // MINING POOL</div>
+                        </div>
+                        <div class="detail-item">
+                            <label>DESTINATION (MY WALLET)</label>
                             <div style="color: var(--accent);">1EzVHtmbN4fs4MiNk3ppEnKKhsmXYJ4s74</div>
-                        </div>
-                        <div class="detail-item">
-                            <label>SERVER NODE ID</label>
-                            <div class="server-tag">54858455222547</div>
-                        </div>
-                        <div class="detail-item">
-                            <label>DESTINATION (YOUR WALLET)</label>
-                            <div>1PWo3JeB9jrGwfHDNpdGK54CRas7fsVzXU</div>
                         </div>
                         <div class="detail-item">
                             <label>NETWORK FEE</label>
