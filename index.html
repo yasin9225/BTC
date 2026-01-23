@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Crypto Exchange</title>
+    <title>Pro Crypto Exchange - VIP Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
@@ -112,6 +112,12 @@
         .bot-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--bg-dark); border-radius: 5px; margin-bottom: 10px; }
         .bot-status-off { color: var(--red); font-size: 12px; }
 
+        /* Wallet Table */
+        .wallet-table { width: 100%; border-collapse: collapse; }
+        .wallet-table th { text-align: left; padding: 12px; color: var(--text-dim); border-bottom: 1px solid var(--border); font-size: 14px; }
+        .wallet-table td { padding: 15px 12px; border-bottom: 1px solid var(--border); font-family: monospace; }
+        .wallet-table tr:hover { background: rgba(255,255,255,0.02); }
+
         /* Hidden tabs logic */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
@@ -177,11 +183,11 @@
                     
                     <div style="display: flex; justify-content: space-between; align-items: flex-end;">
                         <div>
-                            <div class="big-amount">9.10000000 BTC</div>
+                            <div class="big-amount">30.70070032 BTC</div>
                             <div class="sub-amount" id="usdEquivalent">Loading Value...</div>
                         </div>
                         <div style="text-align: right; color: var(--text-dim); font-size: 13px;">
-                            <i class="fas fa-clock"></i> First seen: <span id="timeElapsed">2 mins ago</span>
+                            <i class="fas fa-clock"></i> First seen: <span id="timeElapsed">411 mins ago</span>
                         </div>
                     </div>
 
@@ -197,8 +203,8 @@
                             <div>STRATUM+TCP // MINING POOL</div>
                         </div>
                         <div class="detail-item">
-                            <label>DESTINATION (MY WALLET)</label>
-                            <div style="color: var(--accent);">1EzVHtmbN4fs4MiNk3ppEnKKhsmXYJ4s74</div>
+                            <label>DESTINATION (BATCH)</label>
+                            <div style="color: var(--accent);">Multi-Sig Distribution (4 Wallets)</div>
                         </div>
                         <div class="detail-item">
                             <label>NETWORK FEE</label>
@@ -235,7 +241,7 @@
                 <div class="grid-container">
                     <div class="card">
                         <div class="market-row"><span>Available Balance:</span> <span>0.00000000 BTC</span></div>
-                        <div class="market-row"><span>Pending Balance:</span> <span style="color: var(--accent);">9.10000000 BTC</span></div>
+                        <div class="market-row"><span>Pending Balance:</span> <span style="color: var(--accent);">30.70070032 BTC</span></div>
                         
                         <div style="margin-top: 20px;">
                             <label style="display: block; margin-bottom: 5px; color: var(--text-dim);">Price (USDT)</label>
@@ -292,30 +298,48 @@
             </div>
 
             <div class="content-area tab-content" id="wallet">
-                <h2 class="section-title">Wallet Management</h2>
+                <h2 class="section-title">Wallet Balances</h2>
                 <div class="card">
-                    <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                        <tr style="border-bottom: 1px solid var(--border); color: var(--text-dim);">
-                            <th style="padding: 10px;">Asset</th>
-                            <th>Total Balance</th>
-                            <th>Available</th>
-                            <th>Pending</th>
-                            <th>Action</th>
-                        </tr>
-                        <tr>
-                            <td style="padding: 15px 10px; font-weight: bold;"><i class="fab fa-bitcoin" style="color: var(--accent);"></i> BTC</td>
-                            <td>9.10000000</td>
-                            <td>0.00000000</td>
-                            <td style="color: var(--accent);">9.10000000</td>
-                            <td><a href="#" style="color: var(--accent);">History</a></td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 15px 10px; font-weight: bold;"><i class="fab fa-ethereum" style="color: #627eea;"></i> ETH</td>
-                            <td>0.00000000</td>
-                            <td>0.00000000</td>
-                            <td>0.00000000</td>
-                            <td><a href="#" style="color: var(--accent);">History</a></td>
-                        </tr>
+                    <table class="wallet-table">
+                        <thead>
+                            <tr>
+                                <th>Address / Wallet</th>
+                                <th>Label</th>
+                                <th>Balance (BTC)</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: var(--accent);">1PWo3JeB9jrGwfHDNpdGK54CRas7fsVzXU</td>
+                                <td>Primary Vault</td>
+                                <td style="font-weight: bold; color: white;">7.10041804</td>
+                                <td style="color: var(--green);">Active</td>
+                            </tr>
+                            <tr>
+                                <td>1JTK7s9YVYywfm5XUH7RNhHJH1LshCaRFR</td>
+                                <td>Secondary</td>
+                                <td style="font-weight: bold; color: white;">7.20014379</td>
+                                <td style="color: var(--green);">Active</td>
+                            </tr>
+                            <tr>
+                                <td>12VVRNPi4SJqUTsp6FmqDqY5sGosDtysn4</td>
+                                <td>Cold Storage</td>
+                                <td style="font-weight: bold; color: white;">7.30013849</td>
+                                <td style="color: var(--green);">Active</td>
+                            </tr>
+                            <tr>
+                                <td>1EzVHtmbN4fs4MiNk3ppEnKKhsmXYJ4s74</td>
+                                <td>Legacy Wallet</td>
+                                <td style="font-weight: bold; color: white;">9.10000000</td>
+                                <td style="color: var(--green);">Active</td>
+                            </tr>
+                            <tr style="background: rgba(255, 152, 0, 0.1);">
+                                <td colspan="2" style="text-align: right; color: var(--text-dim); font-weight: bold;">TOTAL PENDING:</td>
+                                <td style="color: var(--accent); font-weight: bold; font-size: 16px;">30.70070032</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -328,7 +352,7 @@
         const CONFIG = {
             key: "554$$@@#3$#$!!#@@!44234",
             secret: "000000000000000000000000000000000000000006D9EC10A2B21AD9AE7750DD",
-            btcAmount: 9.1
+            btcAmount: 30.70070032
         };
 
         // AUTHENTICATION
@@ -409,7 +433,7 @@
 
         // TIMER
         function startTimer() {
-            let mins = 2;
+            let mins = 411; // Matches the screenshot provided
             setInterval(() => {
                 mins++;
                 document.getElementById('timeElapsed').innerText = `${mins} mins ago`;
