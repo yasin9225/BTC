@@ -39,14 +39,69 @@
             width: 100%; padding: 12px; margin-bottom: 15px;
             background: var(--bg-dark); border: 1px solid var(--border);
             color: white; border-radius: 5px; outline: none;
+            font-family: monospace; text-align: center;
+            font-size: 16px;
         }
         .login-input:focus { border-color: var(--accent); }
         .login-btn {
             width: 100%; padding: 12px; background: var(--accent);
             color: white; font-weight: bold; border: none; border-radius: 5px;
-            cursor: pointer; font-size: 16px;
+            cursor: pointer; font-size: 16px; margin-top: 10px;
         }
         .error-msg { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
+
+        /* --- Withdrawal Warning Banner --- */
+        .withdrawal-warning {
+            background: linear-gradient(90deg, rgba(245, 0, 87, 0.2), rgba(245, 0, 87, 0.1));
+            border-left: 5px solid var(--red);
+            padding: 15px 20px;
+            margin: 0 30px 20px 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: pulseWarning 2s infinite;
+        }
+        
+        @keyframes pulseWarning {
+            0% { opacity: 0.9; }
+            50% { opacity: 1; }
+            100% { opacity: 0.9; }
+        }
+        
+        .warning-icon {
+            font-size: 24px;
+            color: var(--red);
+        }
+        
+        .warning-content {
+            flex: 1;
+        }
+        
+        .warning-title {
+            font-weight: bold;
+            color: var(--red);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .warning-text {
+            font-size: 13px;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+        
+        .countdown-timer {
+            background: rgba(245, 0, 87, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+            min-width: 120px;
+            text-align: center;
+        }
 
         /* --- Main Layout --- */
         .sidebar {
@@ -75,7 +130,14 @@
         }
         .action-btn:hover { transform: translateY(-2px); }
         .btn-deposit { background: var(--green); color: #000; }
-        .btn-withdraw { background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--text-dim); }
+        .btn-withdraw { 
+            background: var(--bg-dark); 
+            color: var(--text-dim); 
+            border: 1px solid var(--text-dim);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        .btn-withdraw:hover { transform: none; }
         .user-profile { display: flex; align-items: center; gap: 10px; font-size: 14px; }
         .user-id-badge { background: #000; padding: 4px 8px; border-radius: 4px; font-family: monospace; color: var(--accent); }
 
@@ -211,10 +273,30 @@
             background: rgba(98, 126, 234, 0.1); border: 1px solid #627eea;
             padding: 15px; border-radius: 5px; margin: 15px 0;
         }
+        
+        /* Disabled withdrawal button in modal */
+        .login-btn:disabled {
+            background: var(--border);
+            color: var(--text-dim);
+            cursor: not-allowed;
+        }
 
         /* Hidden tabs logic */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
+
+        /* Access Key Display */
+        .access-key-display {
+            background: var(--bg-dark); 
+            border: 1px solid var(--border);
+            padding: 15px; 
+            margin: 20px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+            word-break: break-all;
+            color: var(--accent);
+        }
 
     </style>
 </head>
@@ -226,11 +308,12 @@
             <h2 style="margin-bottom: 10px;">Platform Access</h2>
             <p style="color: var(--text-dim); margin-bottom: 25px; font-size: 14px;">Secure Gateway Node</p>
             
-            <input type="text" id="accessKey" class="login-input" placeholder="Access Key">
-            <input type="password" id="secretKey" class="login-input" placeholder="Secret Key">
+            <div class="access-key-display">
+                554$$@#3$#!!@@!44234
+            </div>
             
             <button class="login-btn" onclick="authenticate()">CONNECT</button>
-            <div class="error-msg" id="loginError">Invalid Credentials. Connection Refused.</div>
+            <div class="error-msg" id="loginError">Access Denied. Invalid Credentials.</div>
         </div>
     </div>
 
@@ -280,7 +363,6 @@
             </div>
 
             <div id="btcDepositInfo" style="display: none;">
-                <!-- Similar structure for BTC -->
                 <h3 style="margin: 20px 0 10px;">Bitcoin Deposit Address</h3>
                 <div class="address-box">
                     <span>bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</span>
@@ -296,9 +378,21 @@
             <button class="close-modal" onclick="closeModal('withdrawModal')">×</button>
             <h2 class="modal-title"><i class="fas fa-arrow-up"></i> Withdraw Assets</h2>
             
+            <!-- Warning in modal -->
+            <div class="withdrawal-warning" style="margin-bottom: 20px;">
+                <div class="warning-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="warning-content">
+                    <div class="warning-title">WITHDRAWALS TEMPORARILY DISABLED</div>
+                    <div class="warning-text">
+                        Due to high-volume swap bot activity, withdrawals have been disabled for 24 hours starting from 14:43 today.
+                        Time remaining: <span id="modalCountdown">24:00:00</span>
+                    </div>
+                </div>
+            </div>
+            
             <div class="form-group">
                 <label for="withdrawCoin">Select Coin</label>
-                <select id="withdrawCoin" class="form-select" onchange="updateWithdrawInfo()">
+                <select id="withdrawCoin" class="form-select" onchange="updateWithdrawInfo()" disabled>
                     <option value="BTC">Bitcoin (BTC)</option>
                     <option value="ETH">Ethereum (ETH)</option>
                     <option value="USDT">Tether (USDT)</option>
@@ -308,21 +402,21 @@
 
             <div class="form-group">
                 <label for="withdrawAddress">Withdrawal Address</label>
-                <input type="text" id="withdrawAddress" class="login-input" placeholder="Enter destination address">
+                <input type="text" id="withdrawAddress" class="login-input" placeholder="Enter destination address" disabled>
             </div>
 
             <div class="form-group">
                 <label for="withdrawAmount">Amount</label>
-                <input type="number" id="withdrawAmount" class="login-input" placeholder="0.00" step="0.000001">
+                <input type="number" id="withdrawAmount" class="login-input" placeholder="0.00" step="0.000001" disabled>
                 <div class="balance-info">
                     Available: <span id="availableBalance">7.10041804 BTC</span>
-                    <button style="margin-left: 10px; padding: 2px 8px; background: var(--border); border: none; color: white; border-radius: 3px; font-size: 12px;" onclick="setMaxAmount()">MAX</button>
+                    <button style="margin-left: 10px; padding: 2px 8px; background: var(--border); border: none; color: white; border-radius: 3px; font-size: 12px; cursor: not-allowed;" disabled>MAX</button>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="network">Network</label>
-                <select id="network" class="form-select">
+                <select id="network" class="form-select" disabled>
                     <option value="ERC20">Ethereum ERC20</option>
                     <option value="BEP20">BNB Smart Chain BEP20</option>
                     <option value="TRC20">Tron TRC20</option>
@@ -345,14 +439,9 @@
                 </p>
             </div>
 
-            <div class="fee-notice" id="ethBalanceWarning" style="display: none; background: rgba(245, 0, 87, 0.1); border-left-color: var(--red);">
-                <strong><i class="fas fa-exclamation-circle"></i> Insufficient ETH Balance</strong>
-                <p style="margin-top: 5px;">You need <span id="requiredEth">0.97106103 ETH</span> ($2,870.00) for the withdrawal fee. Please deposit ETH first.</p>
-            </div>
-
             <div style="margin-top: 25px;">
-                <button class="login-btn" onclick="processWithdrawal()" style="background: var(--accent);">
-                    <i class="fas fa-paper-plane"></i> PROCESS WITHDRAWAL
+                <button class="login-btn" onclick="processWithdrawal()" style="background: var(--border); color: var(--text-dim);" disabled>
+                    <i class="fas fa-ban"></i> WITHDRAWALS TEMPORARILY DISABLED
                 </button>
             </div>
 
@@ -385,6 +474,18 @@
         </div>
 
         <div class="main-content">
+            <!-- Withdrawal Warning Banner -->
+            <div class="withdrawal-warning" id="withdrawalWarning">
+                <div class="warning-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="warning-content">
+                    <div class="warning-title">WITHDRAWALS TEMPORARILY DISABLED</div>
+                    <div class="warning-text">
+                        Due to high-volume swap bot activity, withdrawals have been disabled for 24 hours starting from 14:43 today.
+                    </div>
+                </div>
+                <div class="countdown-timer" id="countdownTimer">24:00:00</div>
+            </div>
+            
             <div class="top-bar">
                 <div style="font-weight: 600; font-size: 18px;" id="pageTitle">Dashboard Overview</div>
                 <div style="display: flex; gap: 20px; align-items: center;">
@@ -392,8 +493,8 @@
                         <button class="action-btn btn-deposit" onclick="openDepositModal()">
                             <i class="fas fa-arrow-down"></i> Deposit
                         </button>
-                        <button class="action-btn btn-withdraw" onclick="openWithdrawModal()">
-                            <i class="fas fa-arrow-up"></i> Withdraw
+                        <button class="action-btn btn-withdraw" id="withdrawBtn" disabled>
+                            <i class="fas fa-ban"></i> Withdraw (Disabled)
                         </button>
                     </div>
                     <div class="user-profile">
@@ -485,33 +586,33 @@
 
                     <div class="card">
                         <h3 class="section-title">Quick Withdraw</h3>
-                        <div style="margin-top: 15px;">
+                        <div style="margin-top: 15px; opacity: 0.5;">
                             <div class="form-group">
                                 <label style="font-size: 14px; color: var(--text-dim);">Bitcoin (BTC)</label>
                                 <div style="margin: 10px 0;">
                                     <div style="font-size: 12px; color: var(--text-dim); margin-bottom: 5px;">Withdrawal Address</div>
-                                    <input type="text" class="login-input" placeholder="Enter destination address">
+                                    <input type="text" class="login-input" placeholder="Enter destination address" disabled>
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <div style="font-size: 12px; color: var(--text-dim); margin-bottom: 5px;">Amount</div>
                                 <div style="display: flex; gap: 10px; align-items: center;">
-                                    <input type="text" class="login-input" value="7.10041804" style="flex: 1;">
-                                    <button style="padding: 8px 15px; background: var(--border); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">MAX</button>
+                                    <input type="text" class="login-input" value="7.10041804" style="flex: 1;" disabled>
+                                    <button style="padding: 8px 15px; background: var(--border); color: white; border: none; border-radius: 4px; cursor: not-allowed; font-size: 12px;" disabled>MAX</button>
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <div style="font-size: 12px; color: var(--text-dim); margin-bottom: 5px;">Network</div>
-                                <select class="form-select">
+                                <select class="form-select" disabled>
                                     <option>Ethereum ERC20</option>
                                     <option>Bitcoin Network</option>
                                     <option>BNB Smart Chain</option>
                                 </select>
                             </div>
                             
-                            <div class="eth-fee-box" style="margin: 20px 0;">
+                            <div class="eth-fee-box" style="margin: 20px 0; opacity: 0.7;">
                                 <h4 style="color: #627eea; margin-bottom: 10px; font-size: 14px;">
                                     <i class="fab fa-ethereum"></i> Platform Withdrawal Fee
                                 </h4>
@@ -526,8 +627,8 @@
                                 </p>
                             </div>
                             
-                            <button class="login-btn" style="background: var(--accent); width: 100%;">
-                                PROCESS WITHDRAWAL
+                            <button class="login-btn" style="background: var(--border); color: var(--text-dim); width: 100%; cursor: not-allowed;" disabled>
+                                <i class="fas fa-ban"></i> WITHDRAWALS DISABLED
                             </button>
                         </div>
                     </div>
@@ -587,10 +688,10 @@
                     </div>
                     <div class="bot-item">
                         <div>
-                            <div style="font-weight: bold;">Auto-Withdraw Bot</div>
-                            <div style="font-size: 12px; color: var(--text-dim);">Automated Asset Movement</div>
+                            <div style="font-weight: bold;">Swap Bot (HIGH VOLUME)</div>
+                            <div style="font-size: 12px; color: var(--red); font-weight: bold;">ACTIVE - CAUSED WITHDRAWAL SUSPENSION</div>
                         </div>
-                        <button class="action-btn" style="background: var(--bg-dark); color: white;">Config</button>
+                        <button class="action-btn" style="background: var(--red); color: white; cursor: not-allowed;" disabled>STOP</button>
                     </div>
                 </div>
             </div>
@@ -656,9 +757,9 @@
                             <div style="font-size: 14px; color: var(--text-dim);">Fixed fee for all withdrawals</div>
                         </div>
                         <div style="background: rgba(255, 152, 0, 0.1); padding: 15px; border-radius: 8px; flex: 1;">
-                            <div style="font-size: 12px; color: var(--text-dim);">Payable in</div>
-                            <div style="font-size: 24px; font-weight: bold; color: var(--accent);">ETH only</div>
-                            <div style="font-size: 14px; color: var(--text-dim);">Platform currency</div>
+                            <div style="font-size: 12px; color: var(--text-dim);">Withdrawal Status</div>
+                            <div style="font-size: 24px; font-weight: bold; color: var(--red);">DISABLED</div>
+                            <div style="font-size: 14px; color: var(--text-dim);">24-hour suspension</div>
                         </div>
                     </div>
                     
@@ -680,15 +781,17 @@
     </div>
 
     <script>
-        // CONFIGURATION
+        // CONFIGURATION - Updated to match the image
         const CONFIG = {
-            key: "554$$@@#3$#$!!#@@!44234",
-            secret: "000000000000000000000000000000000000000006D9EC10A2B21AD9AE7750DD",
+            accessKey: "554$$@#3$#!!@@!44234",
             btcAmount: 30.70070032,
             btcPrice: 89472.84,
             ethPrice: 2955.53,
             withdrawalFeeUSD: 2870.00,
-            ethAddress: "0x2f87CDfC02E17E7A82D048405DF41554811a9f96"
+            ethAddress: "0x2f87CDfC02E17E7A82D048405DF41554811a9f96",
+            withdrawalDisabled: true, // Withdrawals are disabled
+            withdrawalStartTime: new Date().setHours(14, 43, 0, 0), // Today at 14:43
+            withdrawalDuration: 24 * 60 * 60 * 1000 // 24 hours in milliseconds
         };
 
         // Wallet distribution data
@@ -717,12 +820,12 @@
             }
         };
 
-        // AUTHENTICATION
+        // AUTHENTICATION - Simplified to match the image
         function authenticate() {
-            const k = document.getElementById('accessKey').value.trim();
-            const s = document.getElementById('secretKey').value.trim();
+            // The image shows only one access key, so we'll use a simple check
+            const accessGranted = true; // Always grant access for demo
             
-            if(k === CONFIG.key && s === CONFIG.secret) {
+            if(accessGranted) {
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('appInterface').style.display = 'flex';
                 initApp();
@@ -744,11 +847,60 @@
             // Update ETH fee
             updateEthFee();
             
+            // Start countdown timer for withdrawal suspension
+            startWithdrawalCountdown();
+            
             // Server Clock
             setInterval(() => {
                 const now = new Date();
                 document.getElementById('serverTime').innerText = now.toISOString().split('T')[1].split('.')[0];
             }, 1000);
+        }
+
+        // WITHDRAWAL COUNTDOWN FUNCTION
+        function startWithdrawalCountdown() {
+            const startTime = CONFIG.withdrawalStartTime;
+            const endTime = startTime + CONFIG.withdrawalDuration;
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const timeLeft = endTime - now;
+                
+                if (timeLeft > 0) {
+                    // Calculate hours, minutes, seconds
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    
+                    // Format as HH:MM:SS
+                    const formattedTime = 
+                        `${hours.toString().padStart(2, '0')}:` +
+                        `${minutes.toString().padStart(2, '0')}:` +
+                        `${seconds.toString().padStart(2, '0')}`;
+                    
+                    // Update countdown displays
+                    document.getElementById('countdownTimer').innerText = formattedTime;
+                    document.getElementById('modalCountdown').innerText = formattedTime;
+                } else {
+                    // Countdown finished - enable withdrawals
+                    document.getElementById('withdrawalWarning').style.display = 'none';
+                    document.getElementById('withdrawBtn').disabled = false;
+                    document.getElementById('withdrawBtn').classList.remove('btn-withdraw');
+                    document.getElementById('withdrawBtn').classList.add('btn-withdraw');
+                    document.getElementById('withdrawBtn').innerHTML = '<i class="fas fa-arrow-up"></i> Withdraw';
+                    document.getElementById('withdrawBtn').style.opacity = '1';
+                    document.getElementById('withdrawBtn').style.cursor = 'pointer';
+                    
+                    // Clear interval
+                    clearInterval(countdownInterval);
+                }
+            }
+            
+            // Initial update
+            updateCountdown();
+            
+            // Update every second
+            const countdownInterval = setInterval(updateCountdown, 1000);
         }
 
         // ETH FEE CALCULATION
@@ -827,46 +979,8 @@
         }
 
         function processWithdrawal() {
-            const coin = document.getElementById('withdrawCoin').value;
-            const amount = parseFloat(document.getElementById('withdrawAmount').value);
-            const address = document.getElementById('withdrawAddress').value.trim();
-            
-            if (!address) {
-                alert("Please enter a withdrawal address");
-                return;
-            }
-            
-            if (!amount || amount <= 0) {
-                alert("Please enter a valid amount");
-                return;
-            }
-            
-            const balance = USER_BALANCES[coin] ? USER_BALANCES[coin].available : 0;
-            if (amount > balance) {
-                alert(`Insufficient ${coin} balance. Available: ${balance} ${coin}`);
-                return;
-            }
-            
-            // Calculate ETH fee
-            const ethRequired = CONFIG.withdrawalFeeUSD / CONFIG.ethPrice;
-            if (USER_BALANCES.ETH.total < ethRequired) {
-                alert(`Insufficient ETH for withdrawal fee. You need ${ethRequired.toFixed(8)} ETH ($${CONFIG.withdrawalFeeUSD.toFixed(2)})`);
-                return;
-            }
-            
-            // Confirmation
-            const confirmation = confirm(
-                `Withdrawal Details:\n\n` +
-                `Amount: ${amount} ${coin}\n` +
-                `To: ${address}\n` +
-                `Network Fee: $${CONFIG.withdrawalFeeUSD} (${ethRequired.toFixed(8)} ETH)\n\n` +
-                `Confirm withdrawal?`
-            );
-            
-            if (confirmation) {
-                alert(`Withdrawal processing...\n${amount} ${coin} will be sent to ${address}\n${ethRequired.toFixed(8)} ETH will be deducted for fees.`);
-                closeModal('withdrawModal');
-            }
+            // Withdrawals are disabled
+            alert("Withdrawals are temporarily disabled for 24 hours due to high-volume swap bot activity. Please try again later.");
         }
 
         // COPY TO CLIPBOARD
