@@ -141,4 +141,65 @@
             </div>
 
             <div class="top-bar">
-                <div style="font-size: 1
+                <div style="font-size: 18px; font-weight: 600;">Main Dashboard</div>
+                <div style="display: flex; gap: 15px;">
+                    <button class="action-btn btn-deposit">Deposit</button>
+                    <button class="action-btn btn-withdraw" onclick="openWithdrawModal()">Withdraw</button>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="card" style="border-left: 5px solid var(--green);">
+                    <div style="color: var(--text-dim); font-size: 13px;">TOTAL AVAILABLE BALANCE</div>
+                    <div class="big-amount">30.70070032 BTC</div>
+                    <div style="color: var(--green); font-size: 18px; margin-top: 5px;">≈ $2,746,878.84</div>
+                </div>
+
+                <div class="card">
+                    <h3>Multi-Sig Wallets</h3>
+                    <div style="margin-top: 20px;">
+                        <div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(255,152,0,0.05); border-radius: 5px;">
+                            <span style="font-family: monospace; font-size: 13px;">1PWo3JeB9jrGwfHDNpdGK54CRas7fsVzXU</span>
+                            <span style="font-weight: bold; color: var(--accent);">7.10041804 BTC</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function authenticate() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appInterface').style.display = 'flex';
+            startClock();
+        }
+
+        function openWithdrawModal() {
+            document.getElementById('withdrawModal').style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function processWithdraw() {
+            alert("Security Protocol: Withdrawal request received and pending manual node approval.");
+        }
+
+        function startClock() {
+            setInterval(() => {
+                document.getElementById('serverTime').innerText = new Date().toLocaleTimeString();
+            }, 1000);
+
+            // عداد زمني وهمي للجمالية فقط
+            let h=23, m=59, s=59;
+            setInterval(() => {
+                s--; if(s<0){s=59; m--;} if(m<0){m=59; h--;}
+                document.getElementById('countdown').innerText = 
+                    `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
